@@ -619,7 +619,7 @@ namespace PEPPOLSyncProgram
                     creditNoteHeaderObject = dbcontext.CreditNoteHeaders.Include("CreditNoteLines").Include("Customer").AsNoTracking().Where(x => x.U_peppolsubmit.Equals("Y")).FirstOrDefault();
                     companyObject = dbcontext.CompanyDetails.FirstOrDefault();
                     companyDetailsObj = dbcontext.CompanyInfo.FirstOrDefault();
-                    if(companyObject!=null)
+                    if(creditNoteHeaderObject != null)
                         contactPersonObj = dbcontext.ContactPerson.Where(x => x.CntctCode.Equals(creditNoteHeaderObject.CntctCode)).FirstOrDefault();
                     
                 }
@@ -656,6 +656,9 @@ namespace PEPPOLSyncProgram
                     string peppolId = toPePPOLIDArr[0];
                     string peppolIdName = toPePPOLIDArr[1];
 
+                    if (creditNoteHeaderObject.Comments != null)
+                        creditNoteHeaderObject.Comments = (creditNoteHeaderObject.Comments.Trim() != "") ? creditNoteHeaderObject.Comments : "-";//Need confirmation
+
                     // Creates the Invoice Document.
                     CreditNote creditNoteDocument = new CreditNote
                     {
@@ -667,13 +670,14 @@ namespace PEPPOLSyncProgram
                         IssueDate = creditNoteHeaderObject.DocDate.ToString("yyyy-MM-dd"),
                         CreditNoteTypeCode = "381", //Need confirmation
                         DocumentCurrencyCode = creditNoteHeaderObject.DocCur, //Need confirmation
-                       // BuyerReference = "-", //Need confirmation
-
+                                                                              // BuyerReference = "-", //Need confirmation
+ 
                         Note = new Note
                         {
                             Value = (creditNoteHeaderObject.Comments != null) ? creditNoteHeaderObject.Comments : "-" //Need confirmation
-                        },
+                        },            
 
+                                               
                         BuyerReference = (creditNoteHeaderObject.U_bu != null) ? creditNoteHeaderObject.U_bu : "-",
 
 
@@ -1124,8 +1128,8 @@ namespace PEPPOLSyncProgram
                 {
                     invoiceHeaderObject = dbcontext.InvoiceHeaders.Include("InvoiceLines").Include("Customer").Include("PaymentTerms").AsNoTracking().Where(x => x.U_peppolsubmit.Equals("Y")).FirstOrDefault();
                     companyObject = dbcontext.CompanyDetails.FirstOrDefault();
-                    companyDetailsObj = dbcontext.CompanyInfo.FirstOrDefault();
-                    if (companyObject != null)
+                    companyDetailsObj = dbcontext.CompanyInfo.FirstOrDefault();9
+                    if (invoiceHeaderObject != null)
                         contactPersonObj = dbcontext.ContactPerson.Where(x => x.CntctCode.Equals(invoiceHeaderObject.cntctcode)).FirstOrDefault();
                 }
 
@@ -1161,6 +1165,13 @@ namespace PEPPOLSyncProgram
                         OrderRef = invoiceHeaderObject.NumAtCard.ToString();
                         OrderRef = (OrderRef != string.Empty) ? OrderRef : "-";
                     }
+
+
+                    if (invoiceHeaderObject.Comments != null)
+                        invoiceHeaderObject.Comments = (invoiceHeaderObject.Comments.Trim() != "") ? invoiceHeaderObject.Comments : "-";//Need confirmation
+
+
+
                     // Creates the Invoice Document.
                     Invoice invoiceDocument = new Invoice
                     {

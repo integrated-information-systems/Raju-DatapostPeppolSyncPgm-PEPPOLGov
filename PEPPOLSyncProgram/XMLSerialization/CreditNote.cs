@@ -66,13 +66,14 @@ namespace PEPPOLSyncProgram.XMLSerialization
         public string DueDate { get; set; }
         [XmlElement(Namespace = cbcNameSpace)]
         public string CreditNoteTypeCode { get; set; }
-        [XmlElement(Namespace = cbcNameSpace)]
-        public string DocumentCurrencyCode { get; set; }
-        [XmlElement(Namespace = cbcNameSpace)]
-        public string BuyerReference { get; set; }
 
         [XmlElement(Namespace = cbcNameSpace)]
         public Note Note { get; set; }
+
+        [XmlElement(Namespace = cbcNameSpace)]
+        public string DocumentCurrencyCode { get; set; }
+        [XmlElement(Namespace = cbcNameSpace)]
+        public string BuyerReference { get; set; }            
 
         [XmlElement(Namespace = cacNameSpace)]
         public BillingReference BillingReference { get; set; }
