@@ -1128,7 +1128,7 @@ namespace PEPPOLSyncProgram
                 {
                     invoiceHeaderObject = dbcontext.InvoiceHeaders.Include("InvoiceLines").Include("Customer").Include("PaymentTerms").AsNoTracking().Where(x => x.U_peppolsubmit.Equals("Y")).FirstOrDefault();
                     companyObject = dbcontext.CompanyDetails.FirstOrDefault();
-                    companyDetailsObj = dbcontext.CompanyInfo.FirstOrDefault();9
+                    companyDetailsObj = dbcontext.CompanyInfo.FirstOrDefault();
                     if (invoiceHeaderObject != null)
                         contactPersonObj = dbcontext.ContactPerson.Where(x => x.CntctCode.Equals(invoiceHeaderObject.cntctcode)).FirstOrDefault();
                 }
