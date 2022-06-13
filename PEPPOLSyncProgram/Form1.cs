@@ -187,6 +187,9 @@ namespace PEPPOLSyncProgram
                 int pageNum = 1;
                 int totalRecords = 1;
                 int lastIndex = -1;
+
+                var objType = ConfigurationManager.AppSettings["AP_Invoice_ObjectType"];
+
                 do
                 {
                     var getDocNumApiCall = Task.Run(() => RetrivedDocNo(toPEPPOLID, "invoices", pageNum));
@@ -202,7 +205,7 @@ namespace PEPPOLSyncProgram
                     foreach (var docList in pEPPOLInvoiceReceipt.info)
                     {
                         DocNum = docList.documentNo.ToString();
-                        bool isDocExistAlready = AppSpecificFunc.IsDocNumAlreadyExist(DocNum);
+                        bool isDocExistAlready = AppSpecificFunc.IsDocNumAlreadyExist(DocNum, objType);
                         if (!isDocExistAlready)
                         {
 
@@ -356,6 +359,9 @@ namespace PEPPOLSyncProgram
                 int pageNum = 1;
                 int totalRecords = 1;
                 int lastIndex = -1;
+
+                var objType = ConfigurationManager.AppSettings["AP_Credit_Note_ObjectType"];
+
                 do
                 {
                     var documentnocall = Task.Run(() => RetrivedDocNo(toPEPPOLID, "credit-notes", pageNum));
@@ -370,7 +376,7 @@ namespace PEPPOLSyncProgram
                     foreach (var docList in pEPPOLInvoiceReceipt.info)
                     {
                         DocNum = docList.documentNo.ToString();
-                        bool isDocExistAlready = AppSpecificFunc.IsDocNumAlreadyExist(DocNum);
+                        bool isDocExistAlready = AppSpecificFunc.IsDocNumAlreadyExist(DocNum, objType);
 
                         if (!isDocExistAlready)
                         {

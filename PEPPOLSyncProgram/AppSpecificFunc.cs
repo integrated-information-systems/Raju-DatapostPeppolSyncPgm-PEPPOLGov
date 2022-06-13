@@ -48,12 +48,13 @@ namespace PEPPOLSyncProgram
                 Console.Write(excep);
             }
         }
-        public static bool IsDocNumAlreadyExist(string DocNum)  
+        public static bool IsDocNumAlreadyExist(string DocNum, string objType)
         {
             bool result = true;
             using (var dbcontext = new EFSapDbContext())
             {
-                int count = dbcontext.DraftDocs.Where(x => x.U_peppolref.Equals(DocNum)).Count();
+                //int count = dbcontext.DraftDocs.Where(x => x.U_peppolref.Equals(DocNum)).Count();
+                int count = dbcontext.DraftDocs.Where(x => x.U_peppolref.Equals(DocNum) && x.ObjType.Equals(objType)).Count();
                 result = count > 0 ? true : false;
             }
             return result;

@@ -13,5 +13,8 @@ namespace PEPPOLSyncProgram.SAPDB.Entities
     {
         [Key]
         public string U_peppolref { get; set; }
+
+        public string ObjType { get; set; }
+
     }
 }
